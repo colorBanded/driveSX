@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b504tgy0jn278"
+path="res://.godot/imported/Chapter 6 (Alternative Version) - MOTHER 3.mp3-ca770eabb6fa1cff2cc05cf1e47d059d.mp3str"
+
+[deps]
+
+source_file="res://music/siivagunner/Chapter 6 (Alternative Version) - MOTHER 3.mp3"
+dest_files=["res://.godot/imported/Chapter 6 (Alternative Version) - MOTHER 3.mp3-ca770eabb6fa1cff2cc05cf1e47d059d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b51y6nxl2p44y"
+path="res://.godot/imported/Finale - Undertale.mp3-ba007d4b27da37c5fd4ceddae3b346b2.mp3str"
+
+[deps]
+
+source_file="res://music/siivagunner/Finale - Undertale.mp3"
+dest_files=["res://.godot/imported/Finale - Undertale.mp3-ba007d4b27da37c5fd4ceddae3b346b2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

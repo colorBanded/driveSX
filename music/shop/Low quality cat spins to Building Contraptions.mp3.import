@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dhegox3gk8ups"
+path="res://.godot/imported/Low quality cat spins to Building Contraptions.mp3-434974cd0d5afa7b3fe3fde66e0035f6.mp3str"
+
+[deps]
+
+source_file="res://music/shop/Low quality cat spins to Building Contraptions.mp3"
+dest_files=["res://.godot/imported/Low quality cat spins to Building Contraptions.mp3-434974cd0d5afa7b3fe3fde66e0035f6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,256 @@
+[gd_scene load_steps=19 format=3 uid="uid://bng40joc05ox1"]
+
+[ext_resource type="Script" uid="uid://ds323y10t8yvb" path="res://addons/infinite_heightmap_terrain/infinite_terrain.gd" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://m0jdgguc6l8b" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="FontFile" uid="uid://k46cenfp5uuq" path="res://assets/comic-bald.otf" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://lot2ygm2ppqa" path="res://scripts/asgore.gd" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://v4f3mkuhx8gd" path="res://addons/fakeradio/radio/radio.gd" id="5_85g3d"]
+[ext_resource type="Script" uid="uid://bcemxkxp5ucbv" path="res://addons/fakeradio/station/station.gd" id="6_choun"]
+[ext_resource type="FontFile" uid="uid://dxvcnxd4rsx3g" path="res://assets/Seven Segment.ttf" id="7_ya4ey"]
+[ext_resource type="FontFile" uid="uid://cjjv6xvoknwi2" path="res://assets/FOT-NewRodin Pro EB.otf" id="8_eb6dy"]
+[ext_resource type="Script" uid="uid://bxhamop7y2yjx" path="res://scenes/RadioController.gd" id="9_trceg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0wfyh"]
+sky_top_color = Color(0.0145316, 0.0300313, 0.0918173, 1)
+sky_horizon_color = Color(0.223773, 0.219898, 0.226344, 1)
+ground_horizon_color = Color(0.223773, 0.219898, 0.226344, 1)
+
+[sub_resource type="Sky" id="Sky_sugp2"]
+sky_material = SubResource("ProceduralSkyMaterial_0wfyh")
+
+[sub_resource type="Environment" id="Environment_jyhfs"]
+background_mode = 2
+sky = SubResource("Sky_sugp2")
+tonemap_mode = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0wfyh"]
+frequency = 0.0005
+
+[sub_resource type="Curve" id="Curve_sugp2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_tefeu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_85g3d"]
+radius = 0.301249
+height = 3.49492
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_85g3d"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_jyhfs")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("8_eb6dy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jyhfs")
+
+[node name="InfiniteTerrain" type="StaticBody3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_0wfyh")
+player = NodePath("../VehicleBody3D")
+terrain_noise = SubResource("FastNoiseLite_0wfyh")
+terrain_color_steepness_curve = SubResource("Curve_sugp2")
+terrain_material = SubResource("StandardMaterial3D_jyhfs")
+metadata/_custom_type_script = "uid://ds323y10t8yvb"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="speed" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 40
+text = "speed:"
+horizontal_alignment = 1
+
+[node name="distance" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 40
+text = "distance:"
+horizontal_alignment = 1
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.28547, 2.15562)
+engine_force = 208.09
+script = ExtResource("4_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(2.35396, 0, 0, 0, 0.56923, 0, 0, 0, 3.51909, 0.0479282, 0.0435731, -0.264639)
+mesh = SubResource("BoxMesh_tefeu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(2.35396, 0, 1.42109e-14, 0, 0.993806, 0, 0, 0, 1.79916, 0.0479282, 0.625793, -0.0520728)
+mesh = SubResource("BoxMesh_tefeu")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.23284, -0.630981, -0.192783)
+shape = SubResource("CapsuleShape3D_85g3d")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.09628, -0.630981, -0.192782)
+shape = SubResource("CapsuleShape3D_85g3d")
+
+[node name="WheelFL" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27974, -0.589476, 1.15682)
+wheel_rest_length = 0.2
+wheel_friction_slip = 1.5
+
+[node name="WheelFR" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17485, -0.589476, 1.15682)
+wheel_rest_length = 0.2
+wheel_friction_slip = 1.5
+
+[node name="WheelBR" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17485, -0.589476, -1.40737)
+wheel_rest_length = 0.2
+wheel_friction_slip = 1.5
+
+[node name="WheelBL" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26871, -0.589476, -1.40737)
+wheel_rest_length = 0.2
+wheel_friction_slip = 1.5
+
+[node name="Camera3D" type="Camera3D" parent="VehicleBody3D"]
+transform = Transform3D(-1, 3.23526e-08, -8.12161e-08, -1.77636e-15, 0.929003, 0.370071, 8.74228e-08, 0.370071, -0.929003, -5.33417e-07, 1.93101, -4.74006)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(-4.37114e-08, -0.0476139, 8.74228e-08, 1, -2.08127e-09, -8.74228e-08, 8.74228e-08, 4.16254e-09, 1, -1.18164, -0.602286, 1.14921)
+mesh = SubResource("CylinderMesh_85g3d")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(-4.37114e-08, -0.0476139, 8.74228e-08, 1, -2.08127e-09, -8.74228e-08, 8.74228e-08, 4.16254e-09, 1, -1.18164, -0.602286, -1.40919)
+mesh = SubResource("CylinderMesh_85g3d")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(-4.37114e-08, -0.048, 8.74228e-08, 1, -2.09815e-09, -8.74228e-08, 8.74228e-08, 4.19629e-09, 1, 1.26935, -0.602286, 1.14921)
+mesh = SubResource("CylinderMesh_85g3d")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="VehicleBody3D"]
+transform = Transform3D(-4.37114e-08, -0.048, 8.74228e-08, 1, -2.09815e-09, -8.74228e-08, 8.74228e-08, 4.19629e-09, 1, 1.26935, -0.602286, -1.40919)
+mesh = SubResource("CylinderMesh_85g3d")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+offset_top = 3.0
+offset_right = 203.0
+offset_bottom = 47.0
+theme_override_constants/separation = 40
+
+[node name="gear_label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 40
+text = "PARK"
+horizontal_alignment = 1
+
+[node name="rpm_label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 40
+text = "RPM:"
+horizontal_alignment = 1
+
+[node name="Radio" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_85g3d")
+metadata/_custom_type_script = "uid://v4f3mkuhx8gd"
+
+[node name="ch1" type="Node" parent="Radio"]
+script = ExtResource("6_choun")
+station_name = "89.1 ASGR FM"
+station_description = "Driving In My Car"
+music_array = PackedStringArray("res://music/asgore/toby fox - UNDERTALE Soundtrack - 77 ASGORE.mp3", "res://music/asgore/well this stinks ( Undertale Animation ).mp3")
+metadata/_custom_type_script = "uid://bcemxkxp5ucbv"
+
+[node name="ch2" type="Node" parent="Radio"]
+script = ExtResource("6_choun")
+station_name = "96.7 SIVA FM"
+station_description = "SIX OR SEVEN FLEENSTONES"
+music_array = PackedStringArray("res://music/siivagunner/Buzz Buzz\'s Prophecy - EarthBound.mp3", "res://music/siivagunner/Chapter 6 (Alternative Version) - MOTHER 3.mp3", "res://music/siivagunner/Cool Edge (Night) - Sonic Unleashed.mp3", "res://music/siivagunner/Credits Closing Theme - Half-Life.mp3", "res://music/siivagunner/Finale - Undertale.mp3", "res://music/siivagunner/Flim - Aphex Twin but it\'s the OldSchool RuneScape soundfont.mp3")
+metadata/_custom_type_script = "uid://bcemxkxp5ucbv"
+
+[node name="ch3" type="Node" parent="Radio"]
+script = ExtResource("6_choun")
+station_name = "97.3 PLUH FM"
+station_description = "Pluh"
+music_array = PackedStringArray("res://music/tobyfox/Rude Buster.mp3")
+metadata/_custom_type_script = "uid://bcemxkxp5ucbv"
+
+[node name="ch4" type="Node" parent="Radio"]
+script = ExtResource("6_choun")
+station_name = "104.7 TOBY FM"
+station_description = "Chaos Chaos"
+music_array = PackedStringArray("res://music/tobyfox/Attack of the Killer Queen.mp3", "res://music/tobyfox/Rude Buster.mp3", "res://music/tobyfox/Shop.mp3", "res://music/tobyfox/Spider Dance.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 71 Undertale.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 76 Bergentrückung.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 98 Battle Against a True Hero.mp3")
+metadata/_custom_type_script = "uid://bcemxkxp5ucbv"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -79.0
+offset_bottom = 123.0
+grow_horizontal = 0
+
+[node name="CHTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 41
+text = "TITL"
+horizontal_alignment = 2
+
+[node name="CHDesc" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 25
+text = "DESC"
+horizontal_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="prev" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_eb6dy")
+text = "  PREV  "
+
+[node name="next" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_eb6dy")
+text = "  FWD  "
+
+[node name="radController" type="Node" parent="."]
+script = ExtResource("9_trceg")
+
+[node name="shop_label" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 607.0
+offset_right = 116.0
+offset_bottom = 651.8
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 40
+text = "SHOP: "
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/prev" to="radController" method="_on_prev_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/next" to="radController" method="_on_next_pressed"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://deu3e4qbupn4w"
+path="res://.godot/imported/Credits Closing Theme - Half-Life.mp3-32f565e806f035bb8024fd7f21402348.mp3str"
+
+[deps]
+
+source_file="res://music/siivagunner/Credits Closing Theme - Half-Life.mp3"
+dest_files=["res://.godot/imported/Credits Closing Theme - Half-Life.mp3-32f565e806f035bb8024fd7f21402348.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

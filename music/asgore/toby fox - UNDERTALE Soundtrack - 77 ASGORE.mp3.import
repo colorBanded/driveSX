@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://doydtl12oo03g"
+path="res://.godot/imported/toby fox - UNDERTALE Soundtrack - 77 ASGORE.mp3-91e70d9ab80f1b65672a9abfea8636d5.mp3str"
+
+[deps]
+
+source_file="res://music/asgore/toby fox - UNDERTALE Soundtrack - 77 ASGORE.mp3"
+dest_files=["res://.godot/imported/toby fox - UNDERTALE Soundtrack - 77 ASGORE.mp3-91e70d9ab80f1b65672a9abfea8636d5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

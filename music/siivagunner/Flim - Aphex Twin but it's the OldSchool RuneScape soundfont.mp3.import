@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cicrxbm4kqit0"
+path="res://.godot/imported/Flim - Aphex Twin but it's the OldSchool RuneScape soundfont.mp3-a7a478f276a8a057bc2a3eec7a15fb9a.mp3str"
+
+[deps]
+
+source_file="res://music/siivagunner/Flim - Aphex Twin but it's the OldSchool RuneScape soundfont.mp3"
+dest_files=["res://.godot/imported/Flim - Aphex Twin but it's the OldSchool RuneScape soundfont.mp3-a7a478f276a8a057bc2a3eec7a15fb9a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
