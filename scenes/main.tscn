@@ -199,7 +199,7 @@ metadata/_custom_type_script = "uid://bcemxkxp5ucbv"
 
 [node name="ch4" type="Node" parent="Radio"]
 script = ExtResource("6_choun")
-station_name = "104.7 TOBY FM"
+station_name = "104.7 YARR FM"
 station_description = "Chaos Chaos"
 music_array = PackedStringArray("res://music/tobyfox/Attack of the Killer Queen.mp3", "res://music/tobyfox/Rude Buster.mp3", "res://music/tobyfox/Shop.mp3", "res://music/tobyfox/Spider Dance.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 71 Undertale.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 76 Bergentrückung.mp3", "res://music/tobyfox/toby fox - UNDERTALE Soundtrack - 98 Battle Against a True Hero.mp3")
 metadata/_custom_type_script = "uid://bcemxkxp5ucbv"

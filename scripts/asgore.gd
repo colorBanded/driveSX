@@ -42,9 +42,13 @@ var car_multipliers = {}
 var engine_multipliers = {}
 var fling_multipliers = {}
 
+var origin_position: Vector3
+var distance_from_origin: float = 0.0
+
 func _ready():
+	origin_position = global_position
+	
 	apply_upgrades()
-	calculate_shop_unlock_distance()
 	
 	if globals.should_restore_position():
 		global_position = globals.get_return_position()
@@ -55,7 +59,9 @@ func _ready():
 		globals.return_rotation = Vector3.ZERO
 		globals.return_distance = 0.0
 		
-		print("Restored position from le shop")
+		origin_position = global_position
+	
+	shop_unlock_distance = 500.0
 	
 	if progress_bar:
 		progress_bar.min_value = 0.0
@@ -63,13 +69,7 @@ func _ready():
 		progress_bar.value = fling_cooldown_duration
 		progress_bar.show_percentage = true
 
-func calculate_shop_unlock_distance():
-	var progression = globals.get_shop_progression()
-	shop_unlock_distance = globals.calculate_shop_distance_for_count(progression.shop_count)
-	print("shop unlock distance set to: ", shop_unlock_distance, "m (shop #", progression.shop_count + 1, ")")
-
 func apply_upgrades():
-	# this is so jank its gonna be the end of me i swear to god
 	car_multipliers = globals.get_car_stats()
 	engine_multipliers = globals.get_engine_stats()
 	fling_multipliers = globals.get_fling_stats()
@@ -90,16 +90,13 @@ func apply_upgrades():
 	fling_cooldown_duration = max(5.0, base_fling_cooldown_duration - cooldown_reduction)
 	fling_active_duration = base_fling_active_duration * duration_mult
 	
-	print("Upgrades Applied:")
-	print("Max Torque: ", max_torque)
-	print("Fling Force: ", fling_force)
-	print("Fling Cooldown: ", fling_cooldown_duration)
-	
 	if progress_bar:
 		progress_bar.max_value = fling_cooldown_duration
 
 func _physics_process(delta):
-	globals.update_distance(get_distance_from_origin())
+	distance_from_origin = (global_position - origin_position).length()
+	globals.update_distance(globals.distance + distance_from_origin)
+	
 	update_shop_distance_display()
 	check_shop_unlock()
 	
@@ -159,8 +156,7 @@ func _physics_process(delta):
 
 func update_shop_distance_display():
 	if shop_label:
-		var current_distance = get_distance_from_origin()
-		var distance_remaining = max(0.0, shop_unlock_distance - current_distance)
+		var distance_remaining = max(0.0, shop_unlock_distance - distance_from_origin)
 		
 		if distance_remaining <= 0:
 			shop_label.text = "Shop: Available (Press B)"
@@ -171,24 +167,22 @@ func update_shop_distance_display():
 			else:
 				shop_label.text = "Shop: %.0f m" % distance_remaining
 			
-			var progress_ratio = current_distance / shop_unlock_distance
+			var progress_ratio = distance_from_origin / shop_unlock_distance
 			shop_label.modulate = Color.RED.lerp(Color.GREEN, progress_ratio)
 
 func check_shop_unlock():
-	if get_distance_from_origin() >= shop_unlock_distance:
+	if distance_from_origin >= shop_unlock_distance:
 		if Input.is_action_just_pressed("ui_cancel") or Input.is_key_pressed(KEY_B):
 			visit_shop()
 
 func visit_shop():
-	print("Visiting shop!")
-	
 	var progression = globals.get_shop_progression()
-	var current_distance = get_distance_from_origin()
+	var current_total_distance = globals.distance + distance_from_origin
 	var new_shop_count = progression.shop_count + 1
 	
 	globals.save_shop_progression(
-		current_distance,
-		globals.calculate_shop_distance_for_count(new_shop_count),
+		current_total_distance,
+		current_total_distance + 500.0,
 		new_shop_count
 	)
 	
@@ -213,7 +207,6 @@ func update_fling_cooldown(delta):
 		if fling_cooldown_timer <= 0.0:
 			is_fling_on_cooldown = false
 			fling_cooldown_timer = 0.0
-			print("Fling ability recharged!")
 	else:
 		if progress_bar:
 			progress_bar.value = fling_cooldown_duration
@@ -226,10 +219,8 @@ func update_fling_active(delta):
 		if fling_active_timer <= 0.0:
 			fling_active = false
 			fling_active_timer = 0.0
-			print("Fling effect ended.")
 
 func fling_vehicle():
-	
 	var forward_direction = global_transform.basis.z
 	var upward_direction = Vector3.UP
 	
@@ -239,8 +230,6 @@ func fling_vehicle():
 	
 	start_fling_active()
 	start_fling_cooldown()
-	
-	print("Fling activated! Force: ", fling_force, " Duration: ", fling_active_duration)
 
 func start_fling_active():
 	fling_active = true
@@ -306,7 +295,7 @@ func get_speed_mph() -> float:
 	return current_speed_mph
 
 func get_distance_from_origin() -> float:
-	return global_position.length()
+	return distance_from_origin
 
 func get_rpm() -> float:
 	return rpm
@@ -332,8 +321,7 @@ func get_fling_cooldown_progress() -> float:
 	return 1.0 - (fling_cooldown_timer / fling_cooldown_duration)
 
 func get_distance_to_shop_display() -> String:
-	var current_distance = get_distance_from_origin()
-	var distance_remaining = max(0.0, shop_unlock_distance - current_distance)
+	var distance_remaining = max(0.0, shop_unlock_distance - distance_from_origin)
 	
 	if distance_remaining <= 0:
 		return "Shop: Available (Press B)"
@@ -343,10 +331,7 @@ func get_distance_to_shop_display() -> String:
 		return "Shop: %.0f m" % distance_remaining
 
 func is_shop_available() -> bool:
-	var current_distance = get_distance_from_origin()
-	var progression = globals.get_shop_progression()
-	var has_visited_current_shop = progression.last_shop_distance > 0 and current_distance >= progression.last_shop_distance
-	return current_distance >= shop_unlock_distance and not has_visited_current_shop
+	return distance_from_origin >= shop_unlock_distance
 
 func refresh_upgrades():
 	apply_upgrades()
@@ -360,8 +345,7 @@ func get_current_upgrades() -> Dictionary:
 
 func reset_shop_system():
 	globals.reset_shop_progression()
-	calculate_shop_unlock_distance()
-	print("Shop system reset to beginning")
+	shop_unlock_distance = 500.0
 
 func find_camera_in_scene() -> Node3D:
 	var cameras = get_tree().get_nodes_in_group("camera")

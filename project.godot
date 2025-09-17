@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="driveSX"
-run/main_scene="uid://bng40joc05ox1"
+run/main_scene="uid://chce3sjhgwtlu"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

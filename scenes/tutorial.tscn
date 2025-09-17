@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://d01nc0j4rrjew"]
+
+[ext_resource type="Script" uid="uid://btme0s28g3eq3" path="res://scripts/tutorial.gd" id="1_ph3nu"]
+[ext_resource type="Texture2D" uid="uid://kspi3hacee3d" path="res://images/Screenshot 2025-09-16 at 9.18.31 PM.png" id="2_4kmhl"]
+[ext_resource type="FontFile" uid="uid://k46cenfp5uuq" path="res://assets/comic-bald.otf" id="3_cq4me"]
+
+[node name="tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ph3nu")
+
+[node name="Screenshot2025-09-16At9_18_31 pm" type="Sprite2D" parent="."]
+position = Vector2(303, 250)
+scale = Vector2(0.506345, 0.506345)
+texture = ExtResource("2_4kmhl")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 24.0
+offset_right = 663.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("3_cq4me")
+theme_override_font_sizes/font_size = 31
+text = "Press \"F\" to use boost, cooldown denoted by progressbar"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 432.0
+offset_right = 666.0
+offset_bottom = 484.0
+theme_override_fonts/font = ExtResource("3_cq4me")
+theme_override_font_sizes/font_size = 31
+text = "WASD to move, B to go to shop when available."
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 613.0
+offset_top = 75.0
+offset_right = 1263.0
+offset_bottom = 127.0
+theme_override_fonts/font = ExtResource("3_cq4me")
+theme_override_font_sizes/font_size = 31
+text = "Car includes subscription to
+driveXM wireless radio, use PREV and FWD
+to navigate channels."
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1034.0
+offset_top = 607.0
+offset_right = 1131.0
+offset_bottom = 635.0
+theme_override_fonts/font = ExtResource("3_cq4me")
+text = "yay"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
